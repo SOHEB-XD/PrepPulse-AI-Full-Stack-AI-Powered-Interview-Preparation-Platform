@@ -6,15 +6,21 @@ import LoadingPage from '../components/LoadingPage'
 
 const Login = () => {
 
-    const { loading, handleLogin } = useAuth()
+    const { loading, handleLogin} = useAuth()
     const navigate = useNavigate()
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
+    const [invalidCredentials, setInvalidCredentials] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleLogin({email,password})
+         const user = await handleLogin({email,password})
+
+        if (user === undefined) {
+            return setInvalidCredentials(true)
+        }
+
         navigate('/')
     }
 
@@ -33,18 +39,25 @@ const Login = () => {
 
             {/* Auth Card */}
             <div className="form-container">
+                {invalidCredentials? <p style={{color: "red"}}>Invalid Credentials</p> : null}
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input
-                            onChange={(e) => { setEmail(e.target.value) }}
+                            onChange={(e) => { 
+                                setEmail(e.target.value) 
+                                setInvalidCredentials(false) 
+                            }}
                             type="email" id="email" name='email' placeholder='Enter email address' />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
                         <input
-                            onChange={(e) => { setPassword(e.target.value) }}
+                            onChange={(e) => { 
+                                setPassword(e.target.value)
+                                setInvalidCredentials(false)
+                             }}
                             type="password" id="password" name='password' placeholder='Enter password' />
                     </div>
                     <button className='button primary-button' >Login</button>
