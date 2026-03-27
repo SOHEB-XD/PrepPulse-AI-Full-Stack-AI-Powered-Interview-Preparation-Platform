@@ -9,12 +9,22 @@ const Register = () => {
     const [ username, setUsername ] = useState("")
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
+    const [isUserAlreadyExist, setIsUserAlreadyExist] = useState(false)
 
     const {loading,handleRegister} = useAuth()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleRegister({username,email,password})
+        const user = await handleRegister({username,email,password})
+
+        if (user === undefined) {
+            setIsUserAlreadyExist(true)
+            setTimeout(() => {
+                navigate("/login")
+            }, 1000)  
+            return
+        }
+        
         navigate("/")
     }
 
@@ -26,12 +36,13 @@ const Register = () => {
         <main>
             {/* Page Header */}
             <div className="auth-header">
-                <h1>Join Interview AI</h1>
+                <h1>Join PrepPulse An Interview AI</h1>
                 <p>Create your account to start building personalized interview strategies</p>
             </div>
 
             {/* Auth Card */}
             <div className="form-container">
+                { isUserAlreadyExist ? <p style={{color: "red"}}>User already exists, Navigating to the Login page...</p> : null}
                 <h1>Register</h1>
 
                 <form onSubmit={handleSubmit}>
