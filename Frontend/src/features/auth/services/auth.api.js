@@ -2,7 +2,7 @@ import axios from "axios"
 
 
 const api = axios.create({
-    baseURL: "https://preppulse-ai.onrender.com",
+    baseURL: import.meta.env.API_URL,
     withCredentials: true
 })
 
