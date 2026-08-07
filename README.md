@@ -1,4 +1,4 @@
-# Interview AI - AI-Powered Interview Preparation Platform
+# PrepPulse AI - AI-Powered Interview Preparation Platform
 
 An intelligent interview preparation platform that leverages Google's Gemini AI to create personalized interview strategies based on job descriptions and candidate profiles.
 
